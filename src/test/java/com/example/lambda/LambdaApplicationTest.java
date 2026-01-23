@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test class for Lambda functions
@@ -49,5 +50,17 @@ class LambdaApplicationTest {
     void testReverseWithSingleCharacter() {
         String result = reverse.apply("a");
         assertEquals("a", result);
+    }
+
+    @Test
+    void testUppercaseWithNull() {
+        String result = uppercase.apply(null);
+        assertNull(result);
+    }
+
+    @Test
+    void testReverseWithNull() {
+        String result = reverse.apply(null);
+        assertNull(result);
     }
 }
