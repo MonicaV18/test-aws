@@ -6,12 +6,16 @@ import org.springframework.cloud.function.adapter.aws.FunctionInvoker;
  * AWS Lambda Request Handler using Spring Cloud Function
  * 
  * This handler integrates Spring Cloud Function with AWS Lambda.
- * The handler can be configured in AWS Lambda to point to this class.
+ * You can configure AWS Lambda to use either this custom handler class
+ * or use FunctionInvoker directly.
  * 
- * Handler configuration: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+ * Recommended handler configuration: com.example.lambda.LambdaHandler
  * 
- * Note: With Spring Cloud Function 4.x, you can use FunctionInvoker directly
- * as the handler in AWS Lambda configuration.
+ * Alternative: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+ * 
+ * Both approaches work with Spring Cloud Function 4.x (2023.0.0).
+ * Using a custom handler allows you to add application-specific
+ * initialization or customization if needed in the future.
  */
 public class LambdaHandler extends FunctionInvoker {
 }

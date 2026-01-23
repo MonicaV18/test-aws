@@ -60,6 +60,8 @@ Upload the generated JAR file (`target/aws-lambda-function-1.0.0-aws.jar`) to AW
 
 Set the handler to: `com.example.lambda.LambdaHandler`
 
+Alternatively, you can use: `org.springframework.cloud.function.adapter.aws.FunctionInvoker`
+
 ### 3. Configure Runtime
 
 - Runtime: Java 17
