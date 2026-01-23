@@ -10,5 +10,6 @@ COPY target/*.jar ${LAMBDA_TASK_ROOT}
 # Example: com.example.Handler::handleRequest
 CMD [ "com.example.Handler::handleRequest" ]
 
-# Expose port 9000 for local invocation
-EXPOSE 9000
+# Expose port 8080 (Lambda RIE default port)
+# Map to port 9000 on host for local invocation: podman run -p 9000:8080
+EXPOSE 8080
