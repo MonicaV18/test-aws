@@ -34,7 +34,7 @@ public class RequestProcessingService {
             name
         );
 
-        // Save to PostgreSQL (if available)
+        // Save to MySQL (if available)
         if (requestRepository != null) {
             try {
                 RequestEntity entity = new RequestEntity(name, request.getMessage(), "SUCCESS");
