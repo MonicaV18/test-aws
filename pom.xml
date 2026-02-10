@@ -29,6 +29,7 @@
         <aws-lambda-java-events.version>3.11.4</aws-lambda-java-events.version>
         <aws-lambda-java-log4j2.version>1.6.0</aws-lambda-java-log4j2.version>
         <spring-cloud-function.version>4.1.2</spring-cloud-function.version>
+        <elasticsearch.version>8.11.0</elasticsearch.version>
     </properties>
 
     <dependencies>
@@ -70,6 +71,31 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-log4j2</artifactId>
             <version>${aws-lambda-java-log4j2.version}</version>
+        </dependency>
+
+        <!-- Spring Data JPA -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- PostgreSQL Driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Elasticsearch -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Web (for local testing) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- Spring Boot Test -->

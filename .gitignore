@@ -41,3 +41,11 @@ buildNumber.properties
 *.zip
 *.tar.gz
 *.rar
+
+# Podman/Docker volumes data
+postgres-data/
+elasticsearch-data/
+
+# Local environment
+.env
+.env.local
