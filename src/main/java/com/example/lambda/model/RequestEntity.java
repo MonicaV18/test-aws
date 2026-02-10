@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * JPA Entity for storing request data in PostgreSQL
+ * JPA Entity for storing request data in MySQL
  */
 @Entity
 @Table(name = "requests")

@@ -53,7 +53,7 @@ Download from https://podman.io/getting-started/installation
 # 1. Build the application
 mvn clean package -DskipTests
 
-# 2. Start all services (PostgreSQL, Elasticsearch, App)
+# 2. Start all services (MySQL, Elasticsearch, App)
 podman-compose up -d
 
 # 3. Check logs
@@ -88,7 +88,7 @@ podman-compose ps
 ```
 
 You should see:
-- `spring-cloud-postgres` (healthy)
+- `spring-cloud-mysql` (healthy)
 - `spring-cloud-elasticsearch` (healthy)
 - `spring-cloud-function-app` (running)
 
@@ -109,14 +109,14 @@ Expected response:
 }
 ```
 
-### 3. Verify Data in PostgreSQL
+### 3. Verify Data in MySQL
 
 ```bash
-podman exec -it spring-cloud-postgres psql -U springuser -d springcloud
+podman exec -it spring-cloud-mysql mysql -u springuser -pspringpass springcloud
 
-# In PostgreSQL shell:
+# In MySQL shell:
 SELECT * FROM requests;
-\q
+EXIT;
 ```
 
 ### 4. Verify Data in Elasticsearch
@@ -129,13 +129,13 @@ curl http://localhost:9200/request-logs/_search?pretty
 
 ### Port Already in Use
 
-If ports 5432, 9200, or 8080 are already in use:
+If ports 3306, 9200, or 8080 are already in use:
 
 1. Edit `podman-compose.yml` or `docker-compose.yml`
 2. Change the port mappings:
    ```yaml
    ports:
-     - "15432:5432"  # PostgreSQL
+     - "13306:3306"  # MySQL
      - "19200:9200"  # Elasticsearch
      - "18080:8080"  # Application
    ```
@@ -155,7 +155,7 @@ Wait a bit longer for services to be healthy:
 podman-compose ps
 
 # View logs for specific service
-podman-compose logs postgres
+podman-compose logs mysql
 podman-compose logs elasticsearch
 ```
 
@@ -194,7 +194,7 @@ To run just the infrastructure (DB + ES) and run the app from your IDE:
 
 ```bash
 # Start only infrastructure
-podman-compose up -d postgres elasticsearch
+podman-compose up -d mysql elasticsearch
 
 # Run app from IDE or command line
 mvn spring-boot:run -Dspring-boot.run.profiles=local
@@ -216,13 +216,13 @@ mvn spring-boot:run -Dspring-boot.run.profiles=local
 
 ## Troubleshooting
 
-**Problem:** Application can't connect to PostgreSQL
+**Problem:** Application can't connect to MySQL
 ```bash
-# Check PostgreSQL is healthy
-podman exec -it spring-cloud-postgres pg_isready -U springuser
+# Check MySQL is healthy
+podman exec -it spring-cloud-mysql mysqladmin ping -h localhost -u springuser -pspringpass
 
-# View PostgreSQL logs
-podman logs spring-cloud-postgres
+# View MySQL logs
+podman logs spring-cloud-mysql
 ```
 
 **Problem:** Application can't connect to Elasticsearch
@@ -237,6 +237,6 @@ podman logs spring-cloud-elasticsearch
 **Problem:** "Connection refused" errors
 - Ensure all services are running: `podman-compose ps`
 - Wait for services to be healthy (can take 30-60 seconds on first start)
-- Check if ports are available: `lsof -i :5432,9200,8080`
+- Check if ports are available: `lsof -i :3306,9200,8080`
 
 Happy coding! 🎉

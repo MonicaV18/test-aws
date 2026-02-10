@@ -64,11 +64,11 @@ start_services() {
     print_info "Waiting for services to be ready..."
     sleep 10
     
-    # Check PostgreSQL
-    if podman exec spring-cloud-postgres pg_isready -U springuser -d springcloud &> /dev/null; then
-        print_success "PostgreSQL is ready"
+    # Check MySQL
+    if podman exec spring-cloud-mysql mysqladmin ping -h localhost -u springuser -pspringpass &> /dev/null; then
+        print_success "MySQL is ready"
     else
-        print_error "PostgreSQL is not ready"
+        print_error "MySQL is not ready"
     fi
     
     # Check Elasticsearch
@@ -82,7 +82,7 @@ start_services() {
     echo ""
     print_info "Service URLs:"
     echo "  - Application: http://localhost:8080"
-    echo "  - PostgreSQL: localhost:5432"
+    echo "  - MySQL: localhost:3306"
     echo "  - Elasticsearch: http://localhost:9200"
 }
 
@@ -123,7 +123,7 @@ show_menu() {
     echo "1. Check prerequisites"
     echo "2. Build application"
     echo "3. Start all services (full stack)"
-    echo "4. Start infrastructure only (PostgreSQL + Elasticsearch)"
+    echo "4. Start infrastructure only (MySQL + Elasticsearch)"
     echo "5. Stop services"
     echo "6. View logs"
     echo "7. Test application"
@@ -149,7 +149,7 @@ process_choice() {
             ;;
         4)
             print_info "Starting infrastructure services only..."
-            podman-compose up -d postgres elasticsearch
+            podman-compose up -d mysql elasticsearch
             print_success "Infrastructure services started"
             echo ""
             print_info "Run the app from your IDE with profile: local"

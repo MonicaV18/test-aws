@@ -1,6 +1,6 @@
 # Spring Cloud Function with Podman - Local Development Guide
 
-This guide covers running the Spring Cloud Function application locally using Podman with PostgreSQL and Elasticsearch.
+This guide covers running the Spring Cloud Function application locally using Podman with MySQL and Elasticsearch.
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ Download and install Podman Desktop from: https://podman.io/getting-started/inst
 │   │   ├── java/com/example/lambda/
 │   │   │   ├── LambdaApplication.java          # Main application
 │   │   │   ├── model/
-│   │   │   │   ├── RequestEntity.java          # PostgreSQL entity
+│   │   │   │   ├── RequestEntity.java          # MySQL entity
 │   │   │   │   └── RequestDocument.java        # Elasticsearch document
 │   │   │   ├── repository/
 │   │   │   │   ├── RequestRepository.java      # JPA repository
@@ -66,7 +66,7 @@ Download and install Podman Desktop from: https://podman.io/getting-started/inst
 mvn clean package -DskipTests
 ```
 
-2. **Start all services** (PostgreSQL, Elasticsearch, and App):
+2. **Start all services** (MySQL, Elasticsearch, and App):
 ```bash
 podman-compose up -d
 ```
@@ -83,7 +83,7 @@ podman-compose logs -f
 
 # Specific service
 podman-compose logs -f app
-podman-compose logs -f postgres
+podman-compose logs -f mysql
 podman-compose logs -f elasticsearch
 ```
 
@@ -106,17 +106,17 @@ podman-compose down -v
 
 ### Option 2: Run Infrastructure Only (for development)
 
-Run just PostgreSQL and Elasticsearch, then run the app from your IDE:
+Run just MySQL and Elasticsearch, then run the app from your IDE:
 
 1. **Start infrastructure services**:
 ```bash
-podman-compose up -d postgres elasticsearch
+podman-compose up -d mysql elasticsearch
 ```
 
 2. **Wait for services to be healthy**:
 ```bash
-# Check PostgreSQL
-podman exec -it spring-cloud-postgres pg_isready -U springuser -d springcloud
+# Check MySQL
+podman exec -it spring-cloud-mysql mysqladmin ping -h localhost -u springuser -pspringpass
 
 # Check Elasticsearch
 curl http://localhost:9200/_cluster/health
@@ -129,27 +129,27 @@ mvn spring-boot:run -Dspring-boot.run.profiles=local
 
 4. **Stop infrastructure**:
 ```bash
-podman-compose stop postgres elasticsearch
+podman-compose stop mysql elasticsearch
 ```
 
 ## Database Access
 
-### PostgreSQL Connection Details
+### MySQL Connection Details
 - **Host**: localhost
-- **Port**: 5432
+- **Port**: 3306
 - **Database**: springcloud
 - **Username**: springuser
 - **Password**: springpass
 
-### Connect to PostgreSQL CLI
+### Connect to MySQL CLI
 ```bash
-podman exec -it spring-cloud-postgres psql -U springuser -d springcloud
+podman exec -it spring-cloud-mysql mysql -u springuser -pspringpass springcloud
 ```
 
-### Useful PostgreSQL Commands
+### Useful MySQL Commands
 ```sql
 -- List all tables
-\dt
+SHOW TABLES;
 
 -- View requests table
 SELECT * FROM requests;
@@ -158,7 +158,7 @@ SELECT * FROM requests;
 SELECT COUNT(*) FROM requests;
 
 -- Exit
-\q
+EXIT;
 ```
 
 ## Elasticsearch Access
@@ -201,9 +201,9 @@ curl -X POST http://localhost:8080/processRequest \
 
 ### Verify Data Persistence
 
-1. **Check PostgreSQL**:
+1. **Check MySQL**:
 ```bash
-podman exec -it spring-cloud-postgres psql -U springuser -d springcloud -c "SELECT * FROM requests;"
+podman exec -it spring-cloud-mysql mysql -u springuser -pspringpass springcloud -e "SELECT * FROM requests;"
 ```
 
 2. **Check Elasticsearch**:
@@ -220,8 +220,8 @@ podman machine start
 
 ### Port Already in Use
 ```bash
-# Find process using port 5432 or 9200
-lsof -i :5432
+# Find process using port 3306 or 9200
+lsof -i :3306
 lsof -i :9200
 
 # Or modify podman-compose.yml to use different ports
@@ -229,12 +229,12 @@ lsof -i :9200
 
 ### Database Connection Issues
 ```bash
-# Check if PostgreSQL is healthy
+# Check if MySQL is healthy
 podman-compose ps
-podman logs spring-cloud-postgres
+podman logs spring-cloud-mysql
 
-# Restart PostgreSQL
-podman-compose restart postgres
+# Restart MySQL
+podman-compose restart mysql
 ```
 
 ### Elasticsearch Not Ready

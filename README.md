@@ -2,7 +2,7 @@
 
 This project demonstrates a serverless AWS Lambda function built using Spring Boot 3.2 and Java 17. It leverages Spring Cloud Function to seamlessly integrate Spring Boot with AWS Lambda runtime.
 
-**NEW:** Now includes PostgreSQL and Elasticsearch integration with Podman support for local development! 🎉
+**NEW:** Now includes MySQL and Elasticsearch integration with Podman support for local development! 🎉
 
 ## Features
 
@@ -12,7 +12,7 @@ This project demonstrates a serverless AWS Lambda function built using Spring Bo
 - ✅ AWS Lambda Java Core & Events
 - ✅ Maven build with Shade plugin
 - ✅ Unit tests with JUnit 5
-- ✅ **PostgreSQL database integration**
+- ✅ **MySQL database integration**
 - ✅ **Elasticsearch integration**
 - ✅ **Podman/Docker Compose for local development**
 - ✅ **Dual-mode: Works in AWS Lambda AND locally**
@@ -55,7 +55,7 @@ Or use the interactive menu:
 │   │   │   ├── Request.java                        # Request POJO
 │   │   │   ├── Response.java                       # Response POJO
 │   │   │   ├── model/
-│   │   │   │   ├── RequestEntity.java              # PostgreSQL entity
+│   │   │   │   ├── RequestEntity.java              # MySQL entity
 │   │   │   │   └── RequestDocument.java            # Elasticsearch document
 │   │   │   ├── repository/
 │   │   │   │   ├── RequestRepository.java          # JPA repository

@@ -15,7 +15,7 @@ import java.util.function.Function;
  * It uses Spring Cloud Function to adapt Spring Boot to AWS Lambda runtime.
  * 
  * Features:
- * - PostgreSQL database integration for persistent storage
+ * - MySQL database integration for persistent storage
  * - Elasticsearch integration for indexing and search
  * - Podman/Docker support for local development
  */
