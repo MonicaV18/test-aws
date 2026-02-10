@@ -2,6 +2,8 @@
 
 This project demonstrates a serverless AWS Lambda function built using Spring Boot 3.2 and Java 17. It leverages Spring Cloud Function to seamlessly integrate Spring Boot with AWS Lambda runtime.
 
+**NEW:** Now includes PostgreSQL and Elasticsearch integration with Podman support for local development! 🎉
+
 ## Features
 
 - ✅ Java 17
@@ -10,21 +12,54 @@ This project demonstrates a serverless AWS Lambda function built using Spring Bo
 - ✅ AWS Lambda Java Core & Events
 - ✅ Maven build with Shade plugin
 - ✅ Unit tests with JUnit 5
+- ✅ **PostgreSQL database integration**
+- ✅ **Elasticsearch integration**
+- ✅ **Podman/Docker Compose for local development**
+- ✅ **Dual-mode: Works in AWS Lambda AND locally**
+
+## Quick Start - Local Development
+
+Run the entire stack locally with one command:
+
+```bash
+./local-dev.sh start
+```
+
+Or use the interactive menu:
+
+```bash
+./local-dev.sh
+```
+
+📖 **For detailed local development guide, see [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md)**
 
 ## Project Structure
 
 ```
 .
-├── pom.xml                                          # Maven configuration
+├── Dockerfile                                   # Container image for the app
+├── podman-compose.yml                          # Podman compose configuration
+├── local-dev.sh                                # Local development helper script
+├── LOCAL_DEVELOPMENT.md                        # Local development guide
+├── pom.xml                                     # Maven configuration
 ├── src
 │   ├── main
 │   │   ├── java/com/example/lambda
 │   │   │   ├── LambdaApplication.java              # Spring Boot application
 │   │   │   ├── LambdaHandler.java                  # AWS Lambda entry point
 │   │   │   ├── Request.java                        # Request POJO
-│   │   │   └── Response.java                       # Response POJO
+│   │   │   ├── Response.java                       # Response POJO
+│   │   │   ├── model/
+│   │   │   │   ├── RequestEntity.java              # PostgreSQL entity
+│   │   │   │   └── RequestDocument.java            # Elasticsearch document
+│   │   │   ├── repository/
+│   │   │   │   ├── RequestRepository.java          # JPA repository
+│   │   │   │   └── RequestDocumentRepository.java  # ES repository
+│   │   │   └── service/
+│   │   │       └── RequestProcessingService.java   # Business logic with DB/ES
 │   │   └── resources
-│   │       └── application.properties              # Spring configuration
+│   │       ├── application.properties              # Default config
+│   │       └── application-local.properties        # Local dev config
 │   └── test
 │       └── java/com/example/lambda
 │           ├── LambdaApplicationTests.java         # Context load test
@@ -34,8 +69,12 @@ This project demonstrates a serverless AWS Lambda function built using Spring Bo
 
 ## Prerequisites
 
+### For Local Development
 - Java 17 or higher
 - Maven 3.6 or higher
+- Podman and podman-compose (or Docker and docker-compose)
+
+### For AWS Deployment
 - AWS CLI (for deployment)
 - AWS Account with appropriate permissions
 
