@@ -19,6 +19,8 @@ This project demonstrates a serverless AWS Lambda function built using Spring Bo
 
 ## Quick Start - Local Development
 
+**New to this project? Start here:** 👉 [QUICKSTART.md](QUICKSTART.md)
+
 Run the entire stack locally with one command:
 
 ```bash
@@ -31,7 +33,10 @@ Or use the interactive menu:
 ./local-dev.sh
 ```
 
-📖 **For detailed local development guide, see [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md)**
+📖 **Guides:**
+- 🚀 [Quick Start Guide](QUICKSTART.md) - Get started in 5 minutes
+- 📖 [Local Development Guide](LOCAL_DEVELOPMENT.md) - Detailed documentation
+- ☁️ AWS Lambda Deployment - See below
 
 ## Project Structure
 
